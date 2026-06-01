@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: backstage
+      POSTGRES_PASSWORD: backstage
+      POSTGRES_DB: backstage
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U backstage"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backstage:
+    build: .
+    ports:
+      - "7007:7007"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app-config.local.yaml:/app/app-config.local.yaml:ro
+    command:
+      - node
+      - packages/backend/dist/index.cjs.js
+      - --config
+      - app-config.yaml
+      - --config
+      - app-config.local.yaml
+    environment:
+      POSTGRES_PASSWORD: backstage
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+
+volumes:
+  pgdata:

@@ -1,0 +1,8 @@
+# Debian base image packages — no fix available upstream
+CVE-2023-45853  # zlib1g: will_not_fix (Debian decision)
+CVE-2025-69720  # libtinfo6/ncurses: no fix available
+CVE-2026-42496  # perl-base/Archive::Tar: no fix available
+CVE-2026-42497  # perl-base/Archive::Tar: no fix available
+CVE-2026-48962  # perl-base/perl-IO-Compress: no fix available
+CVE-2026-8376   # perl-base: no fix available
+CVE-2026-9538   # perl-base/Archive::Tar: no fix available
