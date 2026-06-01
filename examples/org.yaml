@@ -1,0 +1,38 @@
+---
+# Groups representando times do Azure AD.
+# Users não são declarados aqui — são provisionados automaticamente via auth
+# (GitHub OAuth agora, Azure AD via msgraph futuramente).
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-engineering
+  title: Platform Engineering
+spec:
+  type: team
+  profile:
+    displayName: Platform Engineering
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: backend-engineers
+  title: Backend Engineers
+spec:
+  type: team
+  profile:
+    displayName: Backend Engineers
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: engineering
+  title: Engineering
+spec:
+  type: department
+  profile:
+    displayName: Engineering
+  children:
+    - platform-engineering
+    - backend-engineers
