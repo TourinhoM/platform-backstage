@@ -34,6 +34,7 @@ ENV NODE_OPTIONS="--no-node-snapshot"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends python3 g++ build-essential && \
+    apt-get install -y --no-install-recommends libgnutls30 && \
     rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable

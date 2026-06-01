@@ -6,3 +6,8 @@ CVE-2026-42497  # perl-base/Archive::Tar: no fix available
 CVE-2026-48962  # perl-base/perl-IO-Compress: no fix available
 CVE-2026-8376   # perl-base: no fix available
 CVE-2026-9538   # perl-base/Archive::Tar: no fix available
+CVE-2025-59375  # libexpat1: will_not_fix
+CVE-2026-25210  # libexpat1: affected, no fix
+CVE-2026-45186  # libexpat1: affected, no fix
+CVE-2025-7458   # libsqlite3-0: affected, no fix
+CVE-2026-33671  # picomatch in npm internal (usr/local/lib/node_modules/npm), not app code
