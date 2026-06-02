@@ -12,5 +12,25 @@ metadata:
 spec:
   type: service
   lifecycle: experimental
-  owner: platform-team
+  owner: platform-engineering
   system: platform-lab
+---
+# Sistema ao qual todos os serviços da plataforma pertencem.
+# Declarado uma vez aqui para que `spec.system: platform-lab` deixe de ser
+# uma referência pendente e o catalog resolva as relações.
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: platform-lab
+  description: Plataforma interna — serviços, golden paths e infra compartilhada
+spec:
+  owner: platform-engineering
+  domain: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: platform
+  description: Domínio de engenharia de plataforma
+spec:
+  owner: platform-engineering
