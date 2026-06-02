@@ -4,6 +4,9 @@ import { githubAuthApiRef } from '@backstage/core-plugin-api';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
 import githubActionsPlugin from '@backstage-community/plugin-github-actions/alpha';
 import argocdPlugin from '@roadiehq/backstage-plugin-argo-cd/alpha';
+import techdocsPlugin from '@backstage/plugin-techdocs/alpha';
+import kubernetesPlugin from '@backstage/plugin-kubernetes/alpha';
+import grafanaPlugin from '@backstage-community/plugin-grafana/alpha';
 import appPlugin from '@backstage/plugin-app';
 import { SignInPageBlueprint } from '@backstage/plugin-app-react';
 import { SignInPage } from '@backstage/core-components';
@@ -32,5 +35,14 @@ const appModule = createFrontendModule({
 });
 
 export default createApp({
-  features: [appModule, catalogPlugin, githubActionsPlugin, argocdPlugin, navModule],
+  features: [
+    appModule,
+    catalogPlugin,
+    githubActionsPlugin,
+    argocdPlugin,
+    techdocsPlugin,
+    kubernetesPlugin,
+    grafanaPlugin,
+    navModule,
+  ],
 });

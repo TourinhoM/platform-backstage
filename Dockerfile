@@ -33,9 +33,12 @@ ENV PYTHON=/usr/bin/python3
 ENV NODE_OPTIONS="--no-node-snapshot"
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 g++ build-essential && \
+    apt-get install -y --no-install-recommends python3 python3-pip g++ build-essential && \
     apt-get install -y --no-install-recommends libgnutls30 && \
     rm -rf /var/lib/apt/lists/*
+
+# TechDocs local builder: mkdocs + techdocs theme/plugins
+RUN pip3 install --no-cache-dir --break-system-packages mkdocs-techdocs-core
 
 RUN corepack enable
 

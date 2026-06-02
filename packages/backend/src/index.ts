@@ -23,6 +23,12 @@ backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
 // argocd
 backend.add(import('@roadiehq/backstage-plugin-argo-cd-backend'));
 
+// kubernetes
+backend.add(import('@backstage/plugin-kubernetes-backend'));
+
+// techdocs
+backend.add(import('@backstage/plugin-techdocs-backend'));
+
 // permissions
 backend.add(import('@backstage/plugin-permission-backend'));
 backend.add(import('@backstage/plugin-permission-backend-module-allow-all-policy'));
