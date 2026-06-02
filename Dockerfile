@@ -32,13 +32,15 @@ ENV NODE_ENV=production
 ENV PYTHON=/usr/bin/python3
 ENV NODE_OPTIONS="--no-node-snapshot"
 
+# TechDocs local builder: instala mkdocs via pip e REMOVE o pip do final.
+# pip só é necessário em build (TechDocs roda via binário mkdocs), e o
+# python3-pip do Debian 12 tem CVE-2026-8643 sem fix — purgar elimina a HIGH.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends python3 python3-pip g++ build-essential && \
     apt-get install -y --no-install-recommends libgnutls30 && \
+    pip3 install --no-cache-dir --break-system-packages mkdocs-techdocs-core && \
+    apt-get purge -y python3-pip && \
     rm -rf /var/lib/apt/lists/*
-
-# TechDocs local builder: mkdocs + techdocs theme/plugins
-RUN pip3 install --no-cache-dir --break-system-packages mkdocs-techdocs-core
 
 RUN corepack enable
 
