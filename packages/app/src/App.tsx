@@ -7,6 +7,7 @@ import argocdPlugin from '@roadiehq/backstage-plugin-argo-cd/alpha';
 import techdocsPlugin from '@backstage/plugin-techdocs/alpha';
 import kubernetesPlugin from '@backstage/plugin-kubernetes/alpha';
 import grafanaPlugin from '@backstage-community/plugin-grafana/alpha';
+import kyvernoPlugin from '@kyverno/backstage-plugin-policy-reporter/alpha';
 import appPlugin from '@backstage/plugin-app';
 import { SignInPageBlueprint } from '@backstage/plugin-app-react';
 import { SignInPage } from '@backstage/core-components';
@@ -43,6 +44,7 @@ export default createApp({
     techdocsPlugin,
     kubernetesPlugin,
     grafanaPlugin,
+    kyvernoPlugin,
     navModule,
   ],
 });

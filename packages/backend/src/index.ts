@@ -29,6 +29,9 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 // techdocs
 backend.add(import('@backstage/plugin-techdocs-backend'));
 
+// kyverno (policy reports via Policy Reporter REST API)
+backend.add(import('@kyverno/backstage-plugin-policy-reporter-backend'));
+
 // permissions
 backend.add(import('@backstage/plugin-permission-backend'));
 backend.add(import('@backstage/plugin-permission-backend-module-allow-all-policy'));
