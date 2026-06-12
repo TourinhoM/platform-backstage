@@ -41,6 +41,7 @@
     "@backstage/plugin-techdocs-backend": "^2.2.0",
     "@kyverno/backstage-plugin-policy-reporter-backend": "^2.5.0",
     "@roadiehq/backstage-plugin-argo-cd-backend": "^4.8.0",
+    "@roadiehq/scaffolder-backend-module-utils": "^4.1.2",
     "app": "link:../app",
     "pg": "^8.11.3"
   },
