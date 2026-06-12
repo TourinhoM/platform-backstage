@@ -22,8 +22,10 @@ backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
 // utils da Roadie (fs/merge/parse): edição de arquivo em repo existente —
 // day-2 editando o gitops repo direto (B′ do workload experiment), sem
 // dispatch de CI e sem PR (form = aprovação; admission do XRD = gate).
-// O push em si é o github:repo:push do module-github oficial (já presente).
 backend.add(import('@roadiehq/scaffolder-backend-module-utils'));
+// platform:github:commit — commit em branch existente (história preservada);
+// o Lego que o OSS não tem (repo:push = só repo virgem; pull-request = PR).
+backend.add(import('./scaffolder/platformActions'));
 
 // argocd
 backend.add(import('@roadiehq/backstage-plugin-argo-cd-backend'));
