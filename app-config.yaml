@@ -52,6 +52,19 @@ catalog:
     - allow: [Component, System, API, Resource, Location, Group, User]
   providers:
     github:
+      # Migração incremental de orgs (apps novas em tourinho-labs; legadas em
+      # TourinhoM). Auto-discovery varre AS DUAS — é o dono único do registro no
+      # catálogo (o scaffolder não faz mais catalog:register). Apps aparecem após
+      # o próximo scan (até `frequency`); baixar a frequência = catálogo mais
+      # responsivo no create, ao custo de mais chamadas à API do GitHub.
+      tourinho-labs:
+        organization: tourinho-labs
+        catalogPath: /catalog-info.yaml
+        filters:
+          branch: main
+        schedule:
+          frequency: { minutes: 30 }
+          timeout: { minutes: 3 }
       TourinhoM:
         organization: TourinhoM
         catalogPath: /catalog-info.yaml
