@@ -1,31 +1,6 @@
 import { createBackend } from '@backstage/backend-defaults';
-import { rootHttpRouterServiceFactory } from '@backstage/backend-defaults/rootHttpRouter';
 
 const backend = createBackend();
-
-// node-fetch v2 (cliente HTTP interno do catalog) NÃO descomprime gzip no Node 22
-// (ERR_STREAM_PREMATURE_CLOSE no Gunzip) -> leituras internas de entidade falham
-// e o scaffolder (parameter-schema) + o indexador de search dão 500. Node 22 é
-// obrigatório (isolated-vm 6.x não compila no Node 20), então desligamos só a
-// compressão de RESPOSTA: replicamos a cadeia default do rootHttpRouter sem o
-// middleware.compression(). O resto (helmet/cors/logging/rateLimit/health/erros)
-// é idêntico ao default. (backend.server.* não está no app-config, então não há
-// trustProxy/timeouts custom a preservar aqui.)
-backend.add(
-  rootHttpRouterServiceFactory({
-    configure({ app, middleware, routes, healthRouter }) {
-      app.use(middleware.helmet());
-      app.use(middleware.cors());
-      // compression() omitido de propósito — ver comentário acima
-      app.use(middleware.logging());
-      app.use(middleware.rateLimit());
-      app.use(healthRouter);
-      app.use(routes);
-      app.use(middleware.notFound());
-      app.use(middleware.error());
-    },
-  }),
-);
 
 backend.add(import('@backstage/plugin-app-backend'));
 backend.add(import('@backstage/plugin-proxy-backend'));

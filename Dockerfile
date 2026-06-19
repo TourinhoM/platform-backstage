@@ -60,6 +60,22 @@ RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
 RUN yarn workspaces focus --all --production && yarn cache clean
 
+# node-fetch v2 tem falso-positivo de "Premature close" em resposta chunked sob
+# Node 22: fixResponseChunkedTransferBadEnding dispara ERR_STREAM_PREMATURE_CLOSE
+# em TODA resposta Transfer-Encoding: chunked (gzip ou não) porque o heurístico
+# (data listener presente no evento 'close') virou sempre-verdadeiro no Node 22.
+# Derruba toda chamada chunked: catalog interno, api.github.com (scaffolder
+# fetch:template/status), search. Node 22 é obrigatório (isolated-vm 6.x não
+# compila no 20). Fix: só sinalizar premature close se a resposta realmente não
+# completou (response.complete === false — o indicador correto do Node), em vez
+# do heurístico do data listener. Falha o build se o padrão sumir (versão nova).
+RUN set -e; found=0; \
+    for f in $(find node_modules -path '*/node-fetch/lib/index.js'); do \
+      sed -i 's/if (hasDataListener && !hadError) {/if (hasDataListener \&\& !hadError \&\& !response.complete) {/' "$f"; \
+      grep -q 'hasDataListener && !hadError && !response.complete' "$f" && found=1; \
+    done; \
+    test "$found" = 1
+
 COPY --from=build --chown=backstage:backstage /app/examples ./examples
 COPY --from=build --chown=backstage:backstage \
     /app/packages/backend/dist/bundle.tar.gz ./
