@@ -44,6 +44,12 @@ RUN apt-get update && \
 
 RUN corepack enable
 
+# O runtime usa yarn via corepack; o npm empacotado no node nunca é chamado.
+# Ele carrega sigstore 3.1.0 (CVE-2026-48815 HIGH, sem fix na linha 3.x — só
+# no 4.1.1), usado só em `npm publish`. Remover o npm elimina a HIGH na fonte,
+# mesmo padrão do purge do python3-pip abaixo.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
+
 RUN addgroup --system --gid 1001 backstage && \
     adduser --system --uid 1001 --gid 1001 backstage
 
