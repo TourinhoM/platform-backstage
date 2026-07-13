@@ -81,7 +81,7 @@ spec:
                     filters:
                       branch: main
                     schedule:
-                      frequency: { minutes: 30 }
+                      frequency: { minutes: 2 }
                       timeout: { minutes: 3 }
                   TourinhoM:
                     organization: TourinhoM
@@ -89,7 +89,7 @@ spec:
                     filters:
                       branch: main
                     schedule:
-                      frequency: { minutes: 30 }
+                      frequency: { minutes: 2 }
                       timeout: { minutes: 3 }
             argocd:
               appLocatorMethods:
