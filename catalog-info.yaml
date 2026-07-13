@@ -16,8 +16,6 @@ spec:
   system: platform-lab
 ---
 # Sistema ao qual todos os serviços da plataforma pertencem.
-# Declarado uma vez aqui para que `spec.system: platform-lab` deixe de ser
-# uma referência pendente e o catalog resolva as relações.
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:

@@ -9,8 +9,7 @@ spec:
   owner: user:guest
   type: service
 
-  # These parameters are used to generate the input form in the frontend, and are
-  # used to gather input data for the execution of the template.
+  # Parameters used to generate the input form.
   parameters:
     - title: Fill in some steps
       required:
@@ -35,8 +34,7 @@ spec:
             allowedHosts:
               - github.com
 
-  # These steps are executed in the scaffolder backend, using data that we gathered
-  # via the parameters above.
+  # Steps executed in the scaffolder backend.
   steps:
     # Each step executes an action, in this case one templates files into the working directory.
     - id: fetch-base
@@ -47,9 +45,7 @@ spec:
         values:
           name: ${{ parameters.name }}
 
-    # This step publishes the contents of the working directory to GitHub.
-    # If you or your organization prefer another default branch name over 'main'
-    # you can change that here.
+    # Publishes the working directory to GitHub.
     - id: publish
       name: Publish
       action: publish:github

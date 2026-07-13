@@ -1,7 +1,5 @@
 ---
 # Groups representando times do Azure AD.
-# Users não são declarados aqui — são provisionados automaticamente via auth
-# (GitHub OAuth agora, Azure AD via msgraph futuramente).
 apiVersion: backstage.io/v1alpha1
 kind: Group
 metadata:

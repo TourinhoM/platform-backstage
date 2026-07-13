@@ -32,9 +32,7 @@ ENV NODE_ENV=production
 ENV PYTHON=/usr/bin/python3
 ENV NODE_OPTIONS="--no-node-snapshot"
 
-# TechDocs local builder: instala mkdocs via pip e REMOVE o pip do final.
-# pip só é necessário em build (TechDocs roda via binário mkdocs), e o
-# python3-pip do Debian 12 tem CVE-2026-8643 sem fix — purgar elimina a HIGH.
+# Instala mkdocs via pip e remove o pip do final.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends python3 python3-pip g++ build-essential && \
     apt-get install -y --no-install-recommends libgnutls30 && \
@@ -44,10 +42,7 @@ RUN apt-get update && \
 
 RUN corepack enable
 
-# O runtime usa yarn via corepack; o npm empacotado no node nunca é chamado.
-# Ele carrega sigstore 3.1.0 (CVE-2026-48815 HIGH, sem fix na linha 3.x — só
-# no 4.1.1), usado só em `npm publish`. Remover o npm elimina a HIGH na fonte,
-# mesmo padrão do purge do python3-pip abaixo.
+# Remove o npm empacotado no node.
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 
 RUN addgroup --system --gid 1001 backstage && \
@@ -66,15 +61,7 @@ RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
 RUN yarn workspaces focus --all --production && yarn cache clean
 
-# node-fetch v2 tem falso-positivo de "Premature close" em resposta chunked sob
-# Node 22: fixResponseChunkedTransferBadEnding dispara ERR_STREAM_PREMATURE_CLOSE
-# em TODA resposta Transfer-Encoding: chunked (gzip ou não) porque o heurístico
-# (data listener presente no evento 'close') virou sempre-verdadeiro no Node 22.
-# Derruba toda chamada chunked: catalog interno, api.github.com (scaffolder
-# fetch:template/status), search. Node 22 é obrigatório (isolated-vm 6.x não
-# compila no 20). Fix: só sinalizar premature close se a resposta realmente não
-# completou (response.complete === false — o indicador correto do Node), em vez
-# do heurístico do data listener. Falha o build se o padrão sumir (versão nova).
+# Corrige o falso-positivo de premature close do node-fetch em respostas chunked.
 RUN set -e; found=0; \
     for f in $(find node_modules -path '*/node-fetch/lib/index.js'); do \
       sed -i 's/if (hasDataListener && !hadError) {/if (hasDataListener \&\& !hadError \&\& !response.complete) {/' "$f"; \

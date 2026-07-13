@@ -74,9 +74,7 @@ spec:
                 - allow: [Component, System, API, Resource, Location, Group, User, Template]
               providers:
                 github:
-                  # Migração incremental de orgs: apps novas nascem em tourinho-labs
-                  # (é onde o scaffolder publica); legadas seguem em TourinhoM.
-                  # Auto-discovery varre AS DUAS e é o dono único do registro.
+                  # Auto-discovery varre tourinho-labs e TourinhoM.
                   tourinho-labs:
                     organization: tourinho-labs
                     catalogPath: /catalog-info.yaml
