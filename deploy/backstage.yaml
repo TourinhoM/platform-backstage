@@ -73,6 +73,13 @@ spec:
               rules:
                 - allow: [Component, System, API, Resource, Location, Group, User, Template]
               providers:
+                githubOrg:
+                  - id: tourinho-labs
+                    githubUrl: https://github.com
+                    orgs: [tourinho-labs]
+                    schedule:
+                      frequency: { minutes: 30 }
+                      timeout: { minutes: 3 }
                 github:
                   # Auto-discovery varre tourinho-labs e TourinhoM.
                   tourinho-labs:
@@ -129,6 +136,7 @@ spec:
             grafana:
               domain: https://grafana.local
               unifiedAlerting: true
+              token: ${GRAFANA_TOKEN}
 
         postgresql:
           enabled: false
