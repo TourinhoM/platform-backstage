@@ -37,6 +37,7 @@ spec:
                 port: 7007
               csp:
                 connect-src: ["'self'", 'http:', 'https:']
+                frame-src: ["'self'", 'https://grafana.local']
               cors:
                 origin: https://backstage.local
                 methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
