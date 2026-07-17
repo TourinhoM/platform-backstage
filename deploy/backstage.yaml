@@ -105,8 +105,7 @@ spec:
                   instances:
                     - name: homelab
                       url: http://argocd-server.argocd.svc
-                      username: admin
-                      password: ${ARGOCD_ADMIN_PASSWORD}
+                      token: ${ARGOCD_AUTH_TOKEN}
             permission:
               enabled: true
 
